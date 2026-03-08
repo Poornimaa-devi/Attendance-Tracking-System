@@ -1,0 +1,5 @@
+# Exclude files from the EB zip
+*.pyc
+__pycache__/
+.git/
+.env

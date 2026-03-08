@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Attendance System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo"><a href="/dashboard">Attendance</a></div>
+        <div class="nav-links">
+            <span>Welcome, {{ session['name'] }}&nbsp;({{ session['role'] }})</span>
+            <a href="/logout" class="button logout small">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Welcome, {{ session['name'] }}!</h1>
+        <div class="actions">
+            <a href="/mark/Present" class="button">Mark Present</a>
+            <a href="/mark/Absent" class="button">Mark Absent</a>
+            <a href="/logout" class="button logout">Logout</a>
+            {% if session['role'] == 'admin' %}
+                <a href="/admin" class="button">Admin Panel</a>
+            {% endif %}
+        </div>
+        <h2>Your Attendance History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in attendance %}
+                    <tr>
+                        <td>{{ record['date'] }}</td>
+                        <td>{{ record['status'] }}</td>
+                        <td>{{ record['timestamp'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

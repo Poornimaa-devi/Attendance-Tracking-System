@@ -1,0 +1,1 @@
+python-3.12  # ensure the EB platform matches; remove this file to use default

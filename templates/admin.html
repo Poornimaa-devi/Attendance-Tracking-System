@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Attendance System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo"><a href="/dashboard">Attendance</a></div>
+        <div class="nav-links">
+            <span>Admin: {{ session['name'] }}</span>
+            <a href="/logout" class="button logout small">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <div class="actions">
+            <a href="/dashboard" class="button">Back to Dashboard</a>
+            <a href="/logout" class="button logout">Logout</a>
+        </div>
+        <h2>All Users</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user['id'] }}</td>
+                        <td>{{ user['name'] }}</td>
+                        <td>{{ user['email'] }}</td>
+                        <td>{{ user['role'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Attendance Records</h2>
+        <form method="GET" action="/admin">
+            <label for="date">Filter by Date (YYYY-MM-DD):</label>
+            <input type="date" id="date" name="date" value="{{ date_filter }}">
+            <button type="submit">Filter</button>
+            <a href="/admin" class="button">Clear Filter</a>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Employee</th>
+                    <th>Status</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in attendance %}
+                    <tr>
+                        <td>{{ record['date'] }}</td>
+                        <td>{{ record['name'] }}</td>
+                        <td>{{ record['status'] }}</td>
+                        <td>{{ record['timestamp'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
